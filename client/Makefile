@@ -1,7 +1,7 @@
 # Makefile
 
 CC = gcc
-CFLAGS = 
+CFLAGS = -g 
 OBJS = main.o selection.o inputaddr.o sendHTTP.o
 LIBS = 
 all:	client

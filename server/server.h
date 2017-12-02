@@ -10,9 +10,5 @@
 
 #define BUF_SIZE 1024
 
-char selapp();
-void inputaddr(char* addr, int* portnum);
-void sendHTTP();
-
-
-
+void inputaddr(int* portnum);
+void runserver();

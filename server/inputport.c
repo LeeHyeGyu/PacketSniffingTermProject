@@ -1,11 +1,10 @@
 #include "client.h"
 
-void inputaddr(char *addr, int* portnum){
+void inputaddr(int* portnum){
 	system("clear");
        	printf("==================================================\n");
        	printf("==================================================\n");
-	printf("Input Server's Ipv4 Address : ");
-	fgets(addr, BUFSIZ, stdin);
+	printf("IP Address is Automatically Allocated.\n");
 	printf("Input Port Number : ");
 	scanf("%d", portnum);
 	getchar();
