@@ -2,6 +2,10 @@
 
 int main (void){
 	char appnum;
+	
+	// get destination address information by standard input.
+        inputaddr(ipaddr, &portnum);
+
 	while(1){
 		switch(appnum = selapp()){
 			case('1'):

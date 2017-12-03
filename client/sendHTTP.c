@@ -1,25 +1,15 @@
 #include "client.h"
 
 void sendHTTP(){
-	int sockfd, portnum;
+	int sockfd;
 	int optval = 1;
-	int rcvcnt;
-	char ipaddr[BUFSIZ];
-	char header[BUF_SIZE];
+	int cnt;
 	char buffer[BUF_SIZE];
 
 	struct sockaddr_in addr;
 
-	struct iphdr *ip = (struct iphdr *) header;
-	struct tcphdr *tcp = (struct tcphdr *) (header + sizeof(struct iphdr));
-
-	memset(header, 0, BUF_SIZE);
-
-	// get destination address information by standard input.
-	inputaddr(ipaddr, &portnum);
-
 	// create socket
-	if((sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_RAW)) == -1){
+	if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1){
 		perror("socket()");
 		exit(1);
 	}
@@ -30,12 +20,6 @@ void sendHTTP(){
 	addr.sin_addr.s_addr = inet_addr(ipaddr);
 	addr.sin_port = htons(portnum);
 
-	// declare using raw socket on socket option.
-	if(setsockopt(sockfd, IPPROTO_IP, IP_HDRINCL, &optval, sizeof(optval)) == -1){
-		perror("setsockopt()");
-		exit(1);
-	}
-
 	// init TCP connection forward to the server.
 	if(connect(sockfd, (struct sockaddr *)&addr, sizeof(addr)) == -1){
 		perror("connect()");
@@ -44,15 +28,17 @@ void sendHTTP(){
 	else	printf("\nConnected...\n");
 
 	// send HTTP GET request to server
+	ipaddr[strlen(ipaddr)-1] = '\0';
 	sprintf(buffer, "GET / HTTP/1.1\r\nHOST: %s\r\nConnection: close\r\n\r\n", ipaddr);
-	write(sockfd, buffer, strlen(buffer));
-
-	memset(buffer, 0, sizeof(buffer));
-	if((rcvcnt = read(sockfd, buffer, sizeof(buffer))) == -1){
-		perror("read()");
+	printf("%s\n", buffer);
+	sleep(5);
+	
+	while((cnt = write(sockfd, buffer, sizeof(buffer))) > 0){
+		perror("write()");
 		exit(1);
 	}
 	
+	printf("Sending Done\n");
+	getchar();
 	close(sockfd);
-	
 }

@@ -1,4 +1,4 @@
-#include "client.h"
+#include "server.h"
 
 void inputaddr(int* portnum){
 	system("clear");

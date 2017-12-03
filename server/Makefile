@@ -2,21 +2,19 @@
 
 CC = gcc
 CFLAGS = -g 
-OBJS = main.o selection.o inputaddr.o sendHTTP.o
+OBJS = main.o inputport.o runserver.o
 LIBS = 
-all:	client
+all:	server
 
-client:	$(OBJS)
-	$(CC) $(CFLAGS) -o client $(OBJS) $(LIBS)
+server:	$(OBJS)
+	$(CC) $(CFLAGS) -o server $(OBJS) $(LIBS)
 
 main.o:	main.c
 	$(CC) $(CFLAGS) -c main.c
-selection.o: selection.c
-	$(CC) $(CFLAGS) -c selection.c
-inputaddr.o: inputaddr.c
-	$(CC) $(CFLAGS) -c inputaddr.c
-sendHTTP.o: sendHTTP.c
-	$(CC) $(CFLAGS) -c sendHTTP.c
+inputport.o: inputport.c
+	$(CC) $(CFLAGS) -c inputport.c
+runserver.o: runserver.c
+	$(CC) $(CFLAGS) -c runserver.c
 
 clean:
 	rm -f $(OBJS) add core
